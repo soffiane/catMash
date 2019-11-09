@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'
-import { HttpClient } from '@angular/common/http';
-import { ICat } from '../cat';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CatListResponse } from './catlistresponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatService {
+  httpOptions = {
+    headers: new HttpHeaders(
+      { 'Content-Type': 'application/json'}
+      )
+  };
+
   constructor(private http: HttpClient) { }
 
-  getCats(): Observable<ICat[]> {
-    return this.http.get<ICat[]>('assets/cats.json');
+  getCats(): Observable<CatListResponse> {
+    return this.http.get<CatListResponse>('assets/cats.json');
   }
 
 }

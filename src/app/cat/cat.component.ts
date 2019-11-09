@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ICat } from '../../cat';
 import { CatService } from '../cat.service';
+import { Cat } from '../cat';
 
 @Component({
   selector: 'app-cat',
@@ -10,16 +10,18 @@ import { CatService } from '../cat.service';
 })
 export class CatComponent implements OnInit {
 
-  public cats: ICat[];
-
-  profile = {};
+  public cats: Cat[];
 
   constructor(private catService: CatService) { }
 
   ngOnInit() {
-      this.catService.getCats().subscribe(data => {
-        this.profile = data;
-      });
+    this.catService.getCats().subscribe(catListResponse => {
+      this.cats = catListResponse.images.map(item => new Cat(
+       item.url,
+       item.id,
+      0
+      ));
+    });
   }
 
 }
